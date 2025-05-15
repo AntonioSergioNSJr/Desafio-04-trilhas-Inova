@@ -1,11 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard COVID - OpenDataSUS</title>
+  <link rel="stylesheet" href="dashboard.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    
+  
+  <aside class="sidebar" id="sidebar">
+    <a href="index.html" class="home-link" aria-label="Página Inicial" title="Página Inicial">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="28" height="28">
+        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+      </svg>
+    </a>
+
+    <button id="toggleMenu" aria-label="Abrir/Fechar menu" title="Abrir/Fechar menu">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="28" height="28" style="transform: rotate(0deg); transition: transform 0.3s;">
+        <path d="M9 18l6-6-6-6"/>
+      </svg>
+    </button>
+
+    <nav class="menu-items" id="menuItems">
+      <button data-section="casos" class="active">Casos COVID</button>
+      <button data-section="vacinas">Vacinação COVID</button>
+      <button data-section="hospitais">Hospitais e Leitos</button>
+    </nav>
+  </aside>
+
+  <main id="mainContent">
+    <section id="casos" class="section active">
+      <h1>Casos COVID</h1>
+      <div id="casosContainer">Carregando dados...</div>
+      <canvas id="casosChart"></canvas>
+    </section>
+
+    <section id="vacinas" class="section">
+      <h1>Vacinação COVID</h1>
+      <div id="vacinasContainer">Carregando dados...</div>
+      <canvas id="vacinasChart"></canvas>
+    </section>
+
+    <section id="hospitais" class="section">
+      <h1>Hospitais e Leitos</h1>
+      <div id="hospitaisContainer">Carregando dados...</div>
+      <canvas id="hospitaisChart"></canvas>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
