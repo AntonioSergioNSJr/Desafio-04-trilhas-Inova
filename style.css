@@ -1,0 +1,118 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f7ff;
+  color: #1a1a1a;
+  line-height: 1.6;
+}
+
+header {
+  background-color: #0a75d1;
+  padding: 20px;
+  color: white;
+  text-align: center;
+}
+
+header h1 {
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 15px;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #ffdd57;
+}
+
+main {
+  max-width: 960px;
+  margin: 30px auto;
+  padding: 0 15px;
+}
+
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(10, 117, 209, 0.2);
+}
+
+.hero img {
+  max-width: 400px;
+  width: 100%;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.hero-text {
+  flex: 1;
+}
+
+.hero-text h2 {
+  color: #0a75d1;
+  margin-bottom: 15px;
+  font-size: 1.8rem;
+}
+
+.hero-text p {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.info-section {
+  background: white;
+  margin-top: 30px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(10, 117, 209, 0.1);
+}
+
+.info-section h2 {
+  color: #0a75d1;
+  margin-bottom: 15px;
+}
+
+.info-section ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.info-section ul li {
+  margin-bottom: 10px;
+  padding-left: 25px;
+  position: relative;
+}
+
+.info-section ul li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #0a75d1;
+  font-size: 20px;
+  top: 0;
+}
+
+footer {
+  text-align: center;
+  padding: 15px;
+  background-color: #0a75d1;
+  color: white;
+  margin-top: 40px;
+  font-size: 0.9rem;
+}
