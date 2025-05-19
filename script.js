@@ -1,6 +1,6 @@
-const baseURL = "https://opendatasus.saude.gov.br/api/v1/";
-const token = ""; // Não necessário para openDataSUS public
+const brasilIOToken = "f9be38771ceccd4f079f09374bb54969906edab4";
 
+// Sidebar e navegação
 const sidebar = document.getElementById("sidebar");
 const toggleMenuBtn = document.getElementById("toggleMenu");
 const menuButtons = document.querySelectorAll(".menu-items button");
@@ -24,7 +24,7 @@ let chartCasos = null;
 let chartVacinas = null;
 let chartHospitais = null;
 
-// Função criar gráfico barra azul com texto branco e fundo azul
+// Função genérica para gráfico de barras
 function criarGraficoBarra(ctx, labels, data, labelTexto) {
   return new Chart(ctx, {
     type: "bar",
@@ -48,10 +48,7 @@ function criarGraficoBarra(ctx, labels, data, labelTexto) {
         legend: {
           labels: {
             color: "white",
-            font: {
-              size: 14,
-              weight: "bold"
-            }
+            font: { size: 14, weight: "bold" }
           }
         },
         tooltip: {
@@ -90,106 +87,67 @@ function criarGraficoBarra(ctx, labels, data, labelTexto) {
   });
 }
 
-// BUSCAR e mostrar Casos por Estado
-async function fetchCasos() {
+// BUSCAR Casos Confirmados via Brasil.IO (usando Axios)
+async function fetchCasosBrasilIO() {
   const container = document.getElementById("casosContainer");
   try {
-    const res = await fetch("https://opendatasus.saude.gov.br/api/v1/caso/data", { method: "GET" });
-    if (!res.ok) throw new Error("Erro ao buscar casos");
-    const json = await res.json();
-
-    // Pega só os dados por estado mais recentes
-    const dados = json.filter(item => item.tipo == "casos").slice(0, 27);
-    
-    // Mapear estado e total de casos confirmados
-    let estados = [];
-    let casos = [];
-    dados.forEach(item => {
-      estados.push(item.sigla_uf);
-      casos.push(item.total);
+    const response = await axios.get('https://api.brasil.io/v1/dataset/covid19/caso_full/data/', {
+      params: {
+        is_last: true,
+        place_type: 'state'
+      },
+      headers: {
+        "Authorization": `Token ${brasilIOToken}`
+      }
     });
 
-    container.textContent = `Total de Estados com dados: ${estados.length}`;
+    const resultados = response.data.results;
+    const estados = resultados.map(item => item.state);
+    const casos = resultados.map(item => item.last_available_confirmed);
 
-    // Criar gráfico
+    container.textContent = `Total de estados com dados: ${estados.length}`;
+
     const ctx = document.getElementById("casosChart").getContext("2d");
-    if(chartCasos) chartCasos.destroy();
-    chartCasos = criarGraficoBarra(ctx, estados, casos, "Casos Confirmados");
+    if (chartCasos) chartCasos.destroy();
+    chartCasos = criarGraficoBarra(ctx, estados, casos, "Casos Confirmados (Brasil.IO)");
 
-  } catch (e) {
-    container.textContent = "Erro ao carregar casos.";
-    console.error(e);
+  } catch (error) {
+    container.textContent = "Erro ao carregar dados do Brasil.IO";
+    console.error("Erro na API Brasil.IO:", error);
   }
 }
 
-// BUSCAR e mostrar Vacinação por Estado
-async function fetchVacinas() {
+// GERAR Gráfico de Vacinas (dados simulados)
+function fetchVacinas() {
   const container = document.getElementById("vacinasContainer");
-  try {
-    // API oficial para vacinação
-    const res = await fetch("https://opendatasus.saude.gov.br/api/v1/vacina/data", { method: "GET" });
-    if (!res.ok) throw new Error("Erro ao buscar vacinas");
-    const json = await res.json();
+  const estados = ["AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA",
+                 "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN",
+                 "RO", "RR", "RS", "SC", "SE", "SP", "TO"];
+  const doses = estados.map(() => Math.floor(Math.random() * 5000000));
 
-    // Pega os dados mais recentes por estado
-    // Note: a API muda, e a chave pode ser diferente, adaptamos para campos comuns:
-    const dadosEstados = json.filter(item => item.tipo == "vacinas").slice(0, 27);
-
-    let estados = [];
-    let doses = [];
-    dadosEstados.forEach(item => {
-      estados.push(item.sigla_uf);
-      doses.push(item.total_doses);
-    });
-
-    container.textContent = `Total de Estados com dados de vacinação: ${estados.length}`;
-
-    // Criar gráfico
-    const ctx = document.getElementById("vacinasChart").getContext("2d");
-    if(chartVacinas) chartVacinas.destroy();
-    chartVacinas = criarGraficoBarra(ctx, estados, doses, "Doses Aplicadas");
-
-  } catch (e) {
-    container.textContent = "Erro ao carregar vacinação.";
-    console.error(e);
-  }
+  container.textContent = `Total de Estados com dados de vacinação: ${estados.length}`;
+  const ctx = document.getElementById("vacinasChart").getContext("2d");
+  if (chartVacinas) chartVacinas.destroy();
+  chartVacinas = criarGraficoBarra(ctx, estados, doses, "Doses Aplicadas");
 }
 
-// BUSCAR e mostrar Hospitais e Leitos por Estado
-async function fetchHospitais() {
+// GERAR Gráfico de Hospitais (dados simulados)
+function fetchHospitais() {
   const container = document.getElementById("hospitaisContainer");
-  try {
-    // API hospitais / leitos (exemplo, dado real depende da API do OpenDataSUS)
-    const res = await fetch("https://opendatasus.saude.gov.br/api/v1/leitos/data", { method: "GET" });
-    if (!res.ok) throw new Error("Erro ao buscar hospitais e leitos");
-    const json = await res.json();
+  const estados = ["AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA",
+                 "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN",
+                 "RO", "RR", "RS", "SC", "SE", "SP", "TO"];
+  const leitos = estados.map(() => Math.floor(Math.random() * 10000));
 
-    // Pega dados recentes
-    const dadosEstados = json.slice(0, 27);
-
-    let estados = [];
-    let leitos = [];
-    dadosEstados.forEach(item => {
-      estados.push(item.sigla_uf);
-      leitos.push(item.leitos_existentes || 0);
-    });
-
-    container.textContent = `Total de Estados com dados de leitos: ${estados.length}`;
-
-    // Criar gráfico
-    const ctx = document.getElementById("hospitaisChart").getContext("2d");
-    if(chartHospitais) chartHospitais.destroy();
-    chartHospitais = criarGraficoBarra(ctx, estados, leitos, "Leitos Existentes");
-
-  } catch (e) {
-    container.textContent = "Erro ao carregar hospitais e leitos.";
-    console.error(e);
-  }
+  container.textContent = `Total de Estados com dados de leitos: ${estados.length}`;
+  const ctx = document.getElementById("hospitaisChart").getContext("2d");
+  if (chartHospitais) chartHospitais.destroy();
+  chartHospitais = criarGraficoBarra(ctx, estados, leitos, "Leitos Existentes");
 }
 
-// Inicializa todos os dados e gráficos
+// Inicializar tudo
 function init() {
-  fetchCasos();
+  fetchCasosBrasilIO();
   fetchVacinas();
   fetchHospitais();
 }
