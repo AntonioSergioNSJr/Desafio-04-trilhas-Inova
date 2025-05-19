@@ -23,17 +23,13 @@ body {
   flex-direction: column;
   align-items: center;
   padding: 10px 0;
-  transition: width 0.3s ease;
-  overflow: hidden;
   z-index: 1000;
 }
 
-/* Sidebar aberta */
 .sidebar.open {
   width: 200px;
 }
 
-/* Link Home (casinha) */
 .home-link {
   display: flex;
   justify-content: center;
@@ -43,7 +39,6 @@ body {
   margin: 15px 0;
 }
 
-/* Botão seta para abrir/fechar menu */
 #toggleMenu {
   background: none;
   border: none;
@@ -52,10 +47,8 @@ body {
   fill: black;
   width: 40px;
   height: 40px;
-  transition: fill 0.3s ease;
 }
 
-/* Animação de rotação da seta quando abrir/fechar */
 .sidebar.open #toggleMenu svg {
   transform: rotate(180deg);
 }
@@ -64,7 +57,6 @@ body {
   fill: #ffdd57;
 }
 
-/* Menu itens */
 .menu-items {
   margin-top: 30px;
   width: 100%;
@@ -77,7 +69,6 @@ body {
   display: flex;
 }
 
-/* Botões do menu */
 .menu-items button {
   width: 100%;
   padding: 10px 15px;
@@ -90,7 +81,6 @@ body {
   border-radius: 5px;
   margin-bottom: 5px;
   font-size: 16px;
-  transition: background 0.2s ease;
 }
 
 .menu-items button:hover {
@@ -101,21 +91,17 @@ body {
   background: #074a7f;
 }
 
-/* Conteúdo principal */
 main {
   margin-left: 60px;
   padding: 20px;
-  transition: margin-left 0.3s ease;
   min-height: 100vh;
   background: #f9faff;
 }
 
-/* Quando menu aberto aumenta o espaço do conteúdo */
 .sidebar.open ~ main {
   margin-left: 200px;
 }
 
-/* Seções de conteúdo - só mostra a ativa */
 .section {
   display: none;
 }
@@ -124,7 +110,6 @@ main {
   display: block;
 }
 
-/* Estilo dos gráficos */
 canvas {
   background: #0a75d1;
   border-radius: 12px;
@@ -134,7 +119,6 @@ canvas {
   box-shadow: 0 4px 12px rgb(10 117 209 / 0.3);
 }
 
-/* Container de texto dos dados */
 #casosContainer, #vacinasContainer, #hospitaisContainer {
   color: #0a75d1;
   font-weight: bold;
