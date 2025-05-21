@@ -34,21 +34,25 @@ function criarGraficoBarra(ctx, labels, data, labelTexto) {
         label: labelTexto,
         data: data,
         backgroundColor: "rgba(255,255,255,0.8)",
-        borderRadius: 8,
+        borderRadius: 6,
         maxBarThickness: 40,
         borderSkipped: false,
-        barPercentage: 0.6,
-        categoryPercentage: 0.6,
+        barPercentage: 0.7,
+        categoryPercentage: 0.7,
       }]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      animation: {
+        duration: 800,
+        easing: "easeOutQuart"
+      },
       plugins: {
         legend: {
           labels: {
             color: "white",
-            font: { size: 14, weight: "bold" }
+            font: { size: 12, weight: "bold" }
           }
         },
         tooltip: {
@@ -56,17 +60,20 @@ function criarGraficoBarra(ctx, labels, data, labelTexto) {
           backgroundColor: "white",
           titleColor: "#0a75d1",
           bodyColor: "#0a75d1",
-          titleFont: { weight: "bold", size: 14 },
-          bodyFont: { size: 12 },
+          titleFont: { weight: "bold", size: 13 },
+          bodyFont: { size: 11 },
           padding: 8,
-          cornerRadius: 6,
+          cornerRadius: 5,
         }
       },
       scales: {
         x: {
           ticks: {
             color: "white",
-            font: { size: 14, weight: "bold" }
+            font: { size: 11, weight: "bold" },
+            maxRotation: 90,
+            minRotation: 60,
+            autoSkip: false,
           },
           grid: { display: false }
         },
@@ -74,12 +81,12 @@ function criarGraficoBarra(ctx, labels, data, labelTexto) {
           beginAtZero: true,
           ticks: {
             color: "white",
-            font: { size: 14, weight: "bold" },
+            font: { size: 11, weight: "bold" },
             stepSize: 1,
           },
           grid: {
-            color: "rgba(255,255,255,0.3)",
-            borderColor: "rgba(255,255,255,0.5)",
+            color: "rgba(255,255,255,0.2)",
+            borderColor: "rgba(255,255,255,0.4)",
           }
         }
       }
