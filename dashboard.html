@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard COVID - Brasil.IO</title>
+  <link rel="stylesheet" href="dashboard.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <aside class="sidebar" id="sidebar">
+    <a href="index.html" class="home-link" aria-label="Página Inicial" title="Página Inicial">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="28" height="28" role="img">
+        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+      </svg>
+    </a>
+
+    <button id="toggleMenu" aria-label="Abrir/Fechar menu" title="Abrir/Fechar menu">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="28" height="28" style="transition: transform 0.3s;">
+        <path d="M9 18l6-6-6-6"/>
+      </svg>
+    </button>
+
+    <nav class="menu-items" id="menuItems">
+      <button data-section="casos" class="active" aria-label="Ver Casos de COVID">Casos COVID</button>
+      <button data-section="vacinas" aria-label="Ver dados de Vacinação">Vacinação COVID</button>
+      <button data-section="hospitais" aria-label="Ver dados de Hospitais e Leitos">Hospitais e Leitos</button>
+    </nav>
+  </aside>
+
+  <main id="mainContent">
+    <section id="casos" class="section active" aria-labelledby="tituloCasos">
+      <h1 id="tituloCasos">Casos COVID</h1>
+      <div id="casosContainer">Carregando dados...</div>
+      <canvas id="casosChart" aria-label="Gráfico de casos de COVID por estado" role="img"></canvas>
+    </section>
+
+    <section id="vacinas" class="section" aria-labelledby="tituloVacinas">
+      <h1 id="tituloVacinas">Vacinação COVID</h1>
+      <div id="vacinasContainer">Carregando dados...</div>
+      <canvas id="vacinasChart" aria-label="Gráfico de vacinação COVID por estado" role="img"></canvas>
+    </section>
+
+    <section id="hospitais" class="section" aria-labelledby="tituloHospitais">
+      <h1 id="tituloHospitais">Hospitais e Leitos</h1>
+      <div id="hospitaisContainer">Carregando dados...</div>
+      <canvas id="hospitaisChart" aria-label="Gráfico de leitos hospitalares por estado" role="img"></canvas>
+    </section>
+  </main>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
